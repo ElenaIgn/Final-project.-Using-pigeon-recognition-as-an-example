@@ -1,4 +1,5 @@
-# installing the necessary libraries
+# Финальный проект. Использование распознавания голубей в качестве примера.
+
 !pip install ultralytics
 !pip install supervision
 !pip install pytube
