@@ -106,6 +106,32 @@ for i, annotator in enumerate(annotators):
 fig.show()
 <img width="472" height="1175" alt="image" src="https://github.com/user-attachments/assets/80a87c37-4b08-4ece-a76c-601d4dad10fe" />
 
+from supervision import Color, ColorPalette, ColorLookup, Position
+bbox_annotator = BoundingBoxAnnotator(ColorPalette.DEFAULT, 4, ColorLookup.TRACK)
+label_annotator = LabelAnnotator(ColorPalette.DEFAULT, Color.BLACK, text_position=Position.TOP_CENTER, color_lookup=ColorLookup.TRACK)
+ellipse_annotator = EllipseAnnotator(ColorPalette.ROBOFLOW, 4, -30)
+
+annotators = [bbox_annotator, label_annotator, ellipse_annotator]
+
+fig, axes = plt.subplots(3, 1, figsize=(15, 15))
+
+for i, annotator in enumerate(annotators):
+  if isinstance(annotator, LabelAnnotator):
+    annotated_frame = annotator.annotate(
+      scene=frame.copy(),
+      detections=supervision_detections,
+      labels=list(map(lambda x: f"person: {x}", supervision_detections.tracker_id))
+    )
+  else:
+    annotated_frame = annotator.annotate(
+      scene=frame.copy(),
+      detections=supervision_detections,
+    )
+  axes[i].axis("off")
+  axes[i].imshow(annotated_frame)
+
+fig.show()
+<img width="472" height="1175" alt="image" src="https://github.com/user-attachments/assets/cfd9c0a5-b417-420f-9a60-cf0250ccfd80" />
 
 
 
